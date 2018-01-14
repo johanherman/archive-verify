@@ -65,7 +65,7 @@ def download_from_pdc(archive, description, dest, dsmc_log_dir, whitelist):
 
 def compare_md5sum(root_dir):
     cmd = "md5sum -c {}/{}".format(root_dir, "checksums_prior_to_pdc.md5")
-    p = subprocess.Popen(cmd, shell=True, stdout.subprocess.PIPE, stderr=subprocess.STDOUT)
+    p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
     import time
     time.sleep(1)
