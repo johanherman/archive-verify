@@ -1,0 +1,15 @@
+aiohttp
+redis
+pycares
+aiodns
+click
+pyyaml
+rq
+pbr
+six
+yarl
+async-timeout
+cchardet
+chardet
+multidict
+idna
