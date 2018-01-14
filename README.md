@@ -8,11 +8,13 @@ Trying it out
 
     python3 -m pip install pipenv
     pipenv install --deploy
+    apt-get install redis-server
 
 
 Try running it:
 
      pipenv run ./archive-verify-ws -c=config/
+     pipenv run rq worker
 
 Running tests
 -------------
