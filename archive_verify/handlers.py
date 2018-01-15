@@ -73,7 +73,7 @@ async def status(request):
                 payload =  {"state": "done", "msg": "Job {} has returned with result: {}".format(job_id, job.result)}
                 code = 200
             else: 
-                payload =  {"state": "error", "msg": "Job {} has returned with result: {}".format(job_id, job.result)}
+                payload =  {"state": "error", "msg": "Job {} has returned with result: {}".format(job_id, job.result), "debug": job.exc_info}
                 code = 500
 
             job.delete()
