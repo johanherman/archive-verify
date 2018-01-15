@@ -31,7 +31,7 @@ async def verify(request):
     body = await request.json()
     host = body["host"]
     archive = body["archive"]
-    src_root = config["pdc_root_dir"].format(host)
+    src_root = request.app["config"]["pdc_root_dir"].format(host)
     archive_path = os.path.join(src_root, archive) 
     description = body["description"]
 
