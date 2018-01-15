@@ -1,5 +1,6 @@
 import json
 import logging
+import os
 
 from aiohttp import web
 from redis import Redis
