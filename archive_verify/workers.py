@@ -6,22 +6,21 @@ from rq import get_current_job
 
 log = logging.getLogger(__name__)
 
-def _parse_dsmc_return_code(process, whitelist):
+def _parse_dsmc_return_code(exit_code, output, whitelist):
     log.debug("DSMC process returned an error!")
 
     # DSMC sets return code to 8 when a warning was encountered.
-    if process.returncode == 8:
+    if exit_code == 8:
         log.debug("DSMC process actually returned a warning.")
 
-        dsmc_out, _ = process.communicate()
-        dsmc_out = dsmc_out.splitlines()
+        output = output.splitlines()
 
         # Search through the DSMC log and see if we only have
         # whitelisted warnings. If that is the case, change the
         # return code to 0 instead. Otherwise keep the error state.
         warnings = []
 
-        for line in dsmc_out:
+        for line in output:
             matches = re.findall(r'ANS[0-9]+W', line)
 
             for match in matches:
@@ -53,8 +52,11 @@ def download_from_pdc(archive, description, dest, dsmc_log_dir, whitelist):
     import time
     time.sleep(3)
 
-    if p.returncode != 0:
-        state = _parse_dsmc_return_code(p, whitelist)
+    dsmc_output, _ = p.communicate()
+    dsmc_exit_code = p.returncode
+
+    if dsmc_exit_code != 0:
+        state = _parse_dsmc_return_code(dsmc_exit_code, dsmc_output, whitelist)
 
         if state:
             return True
