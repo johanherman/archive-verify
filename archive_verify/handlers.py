@@ -29,9 +29,11 @@ async def verify(request):
     RETURN: Id of enqueued job.
     """
     body = await request.json()
-    archive = body["archive"]
-    description = body["description"]
     host = body["host"]
+    archive = body["archive"]
+    src_root = config["pdc_root_dir"].format(host)
+    archive_path = os.path.join(src_root, archive) 
+    description = body["description"]
 
     redis_conn = Redis()
     q = Queue(connection=redis_conn)
