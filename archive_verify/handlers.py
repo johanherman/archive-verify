@@ -41,7 +41,8 @@ async def verify(request):
                         result_ttl=request.app["config"]["job_result_ttl"],
                         ttl=request.app["config"]["job_ttl"])
 
-    status_end_point = "{0}://{1}{2}".format(request.scheme, request.host, request.rel_url("status", job.id))
+    url = request.url
+    status_end_point = "{0}://{1}:{2}/status/{3}".format(url.scheme, url.host, url.port, "status", job.id))
     response = { "status": "pending", "job_id": job.id, "link": status_end_point }
     return web.json_response(response)
 
