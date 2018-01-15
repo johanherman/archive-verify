@@ -88,7 +88,7 @@ def verify_archive(archive, host, description, config):
     download_ok = download_from_pdc(src, description, dest, dsmc_log_dir, whitelist)
 
     if not download_ok:
-        return {"state": "error", "msg": "failed to properly download archive from pdc", "path": "dest"}
+        return {"state": "error", "msg": "failed to properly download archive from pdc", "path": dest}
     else:
         verified_ok = compare_md5sum(dest)
 
