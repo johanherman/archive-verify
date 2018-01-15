@@ -46,7 +46,7 @@ def _parse_dsmc_return_code(process, whitelist):
 # if we have a file there, so we are sure that it is
 # the correct runfolder before we remove it.
 def download_from_pdc(archive, description, dest, dsmc_log_dir, whitelist):
-    cmd = "export DMS_LOG={} && dsmc retr -subdir=yes -description={} {}/ {}/ ".format(dsmc_log_dir, description, archive, dest)
+    cmd = "export DMS_LOG={} && dsmc retr {}/ {}/ -subdir=yes -description='{}'".format(dsmc_log_dir, archive, dest, description)
     #cmd = "echo {} {} > {}.txt".format(archive, description, dest)
     p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
@@ -87,6 +87,8 @@ def verify_archive(archive, host, description, config):
     # TODO: More error checking
     download_ok = download_from_pdc(src, description, dest, dsmc_log_dir, whitelist)
 
+    # dest is wrong
+    # /data/mm-xart002/runfolders/johanhe_test_150821_M00485_0220_000000000-AG2UJ_archive_ca82ed0c-bc6a-4be7-9057-59fbc0a45411
     if not download_ok:
         return {"state": "error", "msg": "failed to properly download archive from pdc", "path": dest}
     else:
