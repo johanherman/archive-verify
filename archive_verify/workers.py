@@ -96,9 +96,11 @@ def verify_archive(archive, host, description, config):
     if not download_ok:
         return {"state": "error", "msg": "failed to properly download archive from pdc", "path": dest}
     else:
-        verified_ok = compare_md5sum(os.path.join(dest, archive))
+        check_dir = os.path.join(dest, archive))
+        verified_ok = compare_md5sum(check_dir)
+        output_file = "{}/compare_md5sum.out".format(check_dir)
 
         if verified_ok:
-            return {"state": "done", "path": dest, "msg": "sucessfully verified archive's md5sums"}
+            return {"state": "done", "path": output_file, "msg": "sucessfully verified archive md5sums"}
         else:
-            return {"state": "error", "path": dest, "msg": "failed to verify archive's md5sums"}
+            return {"state": "error", "path": output_file, "msg": "failed to verify archive md5sums"}
