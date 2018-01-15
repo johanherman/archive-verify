@@ -71,6 +71,8 @@ def compare_md5sum(archive_dir):
     cmd = "cd {} && md5sum -c ./{} > {}".format(archive_dir, "checksums_prior_to_pdc.md5", md5_output)
     p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
+    p.communicate()
+
     import time
     time.sleep(1)
 
